@@ -200,18 +200,19 @@ database/
 | PHP Files | 11 | ~15 KB |
 | SQL Files | 1 | ~2 KB |
 | Documentation | 5 | ~50 KB |
-| **Total** | **32** | **~127 KB** |
+| **Total** | **33** | **~132 KB** |
 
 ## File Dependencies
 
 ### Frontend Dependencies
-- **index.html** requires:
+- `index.html` requires:
   - css/style.css
   - js/app.js
   - js/controllers/authController.js
   - js/controllers/noticesController.js
   - js/controllers/lostFoundController.js
   - js/controllers/cgpaController.js
+  - js/controllers/studyMaterialsController.js
   - js/services/apiService.js
   - AngularJS 1.8.2 (CDN)
   - jQuery 3.6.0 (CDN)

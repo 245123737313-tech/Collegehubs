@@ -80,36 +80,35 @@ All requested features have been successfully implemented. Here's what was added
 
 ---
 
-## 4. CGPA Calculator - Average GPA ✅
+## 4. File Upload System 
 
 ### Backend
-- No changes needed (calculation is client-side)
+- No changes needed (upload handling is client-side)
 
 ### Frontend
-- **Updated**: `js/controllers/cgpaController.js`
-  - Enhanced `calculateCGPA()` function
-  - Now calculates both CGPA and Average GPA
-  - `$scope.averageGPA` stores the average of all semester GPAs
-  - Formula: Average GPA = Sum of all GPAs / Number of semesters
-
-- **Updated**: `views/cgpa.html`
-  - Added "Average GPA: {{ averageGPA }}" display
-  - Shows alongside CGPA and Total Credits
+- **Updated**: `js/controllers/fileUploadController.js`
+  - Handles file upload and preview
+  - Validates file type and size
+  - Displays upload progress and success/error messages
+  
+- **Updated**: `views/fileupload.html`
+  - Added file upload interface with drag & drop
+  - Displays file preview and upload status
 
 ### Display
-- **CGPA**: Weighted average based on credits
-- **Average GPA**: Simple average of all semester GPAs
-- **Total Credits**: Sum of all credits
+- **File Upload**: Allows users to upload study materials
+- **File Preview**: Displays uploaded file preview
+- **Upload Status**: Shows upload progress and success/error messages
 
 ---
 
-## 5. Header - User Authentication Display ✅
+## 5. Header - User Authentication Display 
 
 ### Already Implemented
 The header already shows:
-- ✅ "Welcome, [User Name]" when logged in
-- ✅ Logout button when logged in
-- ✅ Login/Register buttons when not logged in
+- "Welcome, [User Name]" when logged in
+- Logout button when logged in
+- Login/Register buttons when not logged in
 
 This was part of the original implementation in:
 - `js/controllers/authController.js`
@@ -127,10 +126,10 @@ This was part of the original implementation in:
 1. `js/services/apiService.js` - Added delete methods
 2. `js/controllers/noticesController.js` - Added delete and login check
 3. `js/controllers/lostFoundController.js` - Added delete and login check
-4. `js/controllers/cgpaController.js` - Enhanced CGPA calculation
+4. `js/controllers/fileUploadController.js` - Added file upload handling
 5. `views/notices.html` - Added delete button and login message
 6. `views/lostfound.html` - Added delete button and login message
-7. `views/cgpa.html` - Added average GPA display
+7. `views/fileupload.html` - Added file upload interface
 8. `css/style.css` - Added delete button and card header styles
 
 ---
@@ -149,11 +148,10 @@ This was part of the original implementation in:
 - Form shows when user logs in
 - Session check on page load
 
-### CGPA Calculator
-- **CGPA**: Weighted average (GPA × Credits / Total Credits)
-- **Average GPA**: Simple average of all semester GPAs
-- **Total Credits**: Sum of all credits entered
-- Real-time calculation as user enters data
+### File Upload System
+- **File Upload**: Allows users to upload study materials
+- **File Preview**: Displays uploaded file preview
+- **Upload Status**: Shows upload progress and success/error messages
 
 ### Header Display
 - Shows "Hi [User Name]" when logged in
@@ -171,9 +169,8 @@ This was part of the original implementation in:
 - [ ] Try to post lost item without login - should show error
 - [ ] Login and post a lost item
 - [ ] Click delete button on item - confirm deletion
-- [ ] Go to CGPA calculator
-- [ ] Add semesters with different GPAs
-- [ ] Verify CGPA and Average GPA display correctly
+- [ ] Go to file upload page
+- [ ] Upload a file and verify preview and upload status
 - [ ] Verify logout works and buttons change
 
 ---

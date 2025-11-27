@@ -12,7 +12,7 @@ A comprehensive web-based student portal built with HTML, CSS, JavaScript, jQuer
 1. **User Authentication**: Login and Registration system
 2. **Notices**: View and post college notices
 3. **Lost & Found**: Report and browse lost items
-4. **CGPA Calculator**: Calculate cumulative GPA
+4. **File Upload**: Share and download study materials
 5. **Responsive Design**: Works on desktop and mobile devices
 
 ## Project Structure
@@ -27,7 +27,7 @@ collegelibraryhub/
 │   │   ├── authController.js
 │   │   ├── noticesController.js
 │   │   ├── lostFoundController.js
-│   │   └── cgpaController.js
+│   │   └── studyMaterialsController.js
 │   └── services/
 │       └── apiService.js
 ├── views/

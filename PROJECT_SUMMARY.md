@@ -36,13 +36,13 @@ Complete schema with 3 tables:
 - **register.html** - User registration form
 - **notices.html** - View and post notices
 - **lostfound.html** - Browse and post lost items
-- **cgpa.html** - Interactive CGPA calculator
+- **fileupload.html** - File upload and download
 
 ### 5. Controllers (AngularJS)
 - **authController.js** - Login, register, session management
 - **noticesController.js** - Notices CRUD operations
 - **lostFoundController.js** - Lost items management
-- **cgpaController.js** - CGPA calculation logic
+- **fileUploadController.js** - File upload and download functionality
 
 ### 6. Services (API Integration)
 - **apiService.js** - Centralized API calls using $http
@@ -69,12 +69,10 @@ Complete schema with 3 tables:
 - ✅ Track item name, description, and poster name
 - ✅ Timestamps for each post
 
-### CGPA Calculator
-- ✅ Add multiple semesters dynamically
-- ✅ Input GPA and credits per semester
-- ✅ Real-time CGPA calculation
-- ✅ Remove semesters
-- ✅ Reset calculator
+### File Upload
+- ✅ Upload files for sharing and downloading
+- ✅ View and download uploaded files
+- ✅ Delete uploaded files
 
 ### Header Component
 - ✅ Fixed navigation bar
