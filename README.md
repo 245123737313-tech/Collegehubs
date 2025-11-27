@@ -9,11 +9,32 @@ A comprehensive web-based student portal built with HTML, CSS, JavaScript, jQuer
 - **Server**: XAMPP (Apache + MySQL)
 
 ## Features
-1. **User Authentication**: Login and Registration system
-2. **Notices**: View and post college notices
-3. **Lost & Found**: Report and browse lost items
-4. **File Upload**: Share and download study materials
-5. **Responsive Design**: Works on desktop and mobile devices
+1. **User Authentication**
+   - Secure login and registration system
+   - Session management
+   - Role-based access control
+
+2. **Notices Board**
+   - View all college notices
+   - Post new notices (for authorized users)
+   - Delete notices with confirmation
+
+3. **Lost & Found**
+   - Report lost items
+   - Browse found items
+   - Delete your own posts
+
+4. **Study Materials**
+   - Upload and share files (PDF, DOC, PPT, etc.)
+   - Download study materials
+   - Delete your uploaded files
+   - File type and size validation
+   - Organized by subject and semester
+
+5. **Responsive Design**
+   - Works on all devices (desktop, tablet, mobile)
+   - Clean and intuitive interface
+   - Fast and efficient loading
 
 ## Project Structure
 ```
@@ -51,11 +72,18 @@ collegelibraryhub/
     └── schema.sql
 ```
 
-## Setup Instructions
+## Getting Started
 
 ### Prerequisites
-- XAMPP installed and running
-- PHP 7.0 or higher
+- XAMPP (Apache + MySQL) or similar web server
+- PHP 7.4+
+- MySQL 5.7+
+- Modern web browser (Chrome, Firefox, Edge, Safari)
+
+### File Upload Requirements
+- `uploads/study_materials/` directory must be writable
+- Maximum file size: 50MB
+- Allowed file types: PDF, DOC, DOCX, PPT, PPTX, TXT
 - MySQL 5.7 or higher
 
 ### Step 1: Create Database
@@ -101,6 +129,47 @@ CREATE TABLE IF NOT EXISTS lostfound (
 1. Start Apache and MySQL from XAMPP Control Panel
 2. Open your browser and navigate to `http://localhost/collegelibraryhub/`
 3. You should see the College Hub home page
+
+## Troubleshooting
+
+### Installation
+
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/245123737313-tech/Collegehubs.git
+   cd Collegehubs
+   ```
+
+2. Set up the database:
+   - Open phpMyAdmin
+   - Create a new database named `collegehub_db`
+   - Import the schema from `database/schema.sql`
+
+3. Configure file uploads:
+   ```bash
+   mkdir -p uploads/study_materials
+   chmod 755 uploads uploads/study_materials
+   ```
+
+4. Start the server:
+   - Launch XAMPP Control Panel
+   - Start Apache and MySQL
+   - Access the application at `http://localhost/Collegelibraryhub`
+
+### Database Connection Error
+- Ensure MySQL is running in XAMPP
+- Check if `collegehub_db` database exists
+- Verify credentials in `backend/connect.php`
+
+### Pages Not Loading
+- Check if Apache is running
+- Verify the project path is correct
+- Clear browser cache
+
+### AJAX Requests Failing
+- Check browser console for errors
+- Ensure PHP files are in the correct location
+- Verify XAMPP is serving PHP files correctly
 
 ## Usage
 
@@ -190,21 +259,6 @@ date (TIMESTAMP)
 - Edge (latest)
 - Mobile browsers
 
-## Troubleshooting
-
-### Database Connection Error
-- Ensure MySQL is running in XAMPP
-- Check if `collegehub_db` database exists
-- Verify credentials in `backend/connect.php`
-
-### Pages Not Loading
-- Check if Apache is running
-- Verify the project path is correct
-- Clear browser cache
-
-### AJAX Requests Failing
-- Check browser console for errors
-- Ensure PHP files are in the correct location
 - Verify XAMPP is serving PHP files correctly
 
 ## Future Enhancements
