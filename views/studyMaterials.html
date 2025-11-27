@@ -1,0 +1,429 @@
+<div class="page-container">
+    <div class="page-header">
+        <h1>Study Materials & Notes</h1>
+    </div>
+
+    <div class="study-materials-container">
+        <!-- Upload Section (For logged-in users) -->
+        <div class="upload-section">
+            <div ng-if="!isLoggedIn" class="login-prompt">
+                <p>📝 <strong>Want to upload study materials?</strong> Please <a href="#!/login">login</a> to upload materials.</p>
+            </div>
+        <div ng-if="isLoggedIn">
+            <div class="upload-card">
+                <h2>Upload Study Material</h2>
+                
+                <div ng-if="message" class="alert" ng-class="{'alert-success': message.includes('successfully'), 'alert-error': message.includes('Error') || message.includes('error')}">
+                    {{ message }}
+                </div>
+
+                <form class="upload-form">
+                    <div class="form-group">
+                        <label for="title">Title *</label>
+                        <input type="text" id="title" ng-model="uploadForm.title" placeholder="Enter material title" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="description">Description</label>
+                        <textarea id="description" ng-model="uploadForm.description" placeholder="Enter material description" rows="3"></textarea>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="subject">Subject</label>
+                            <input type="text" id="subject" ng-model="uploadForm.subject" placeholder="e.g., Mathematics">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="semester">Semester</label>
+                            <select id="semester" ng-model="uploadForm.semester">
+                                <option value="1">Semester 1</option>
+                                <option value="2">Semester 2</option>
+                                <option value="3">Semester 3</option>
+                                <option value="4">Semester 4</option>
+                                <option value="5">Semester 5</option>
+                                <option value="6">Semester 6</option>
+                                <option value="7">Semester 7</option>
+                                <option value="8">Semester 8</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="fileInput">Select File *</label>
+                        <div class="file-input-wrapper">
+                            <input type="file" id="fileInput" accept=".pdf,.ppt,.pptx,.doc,.docx,.txt" required>
+                            <span class="file-hint">Supported: PDF, PPT, PPTX, DOC, DOCX, TXT (Max 50MB)</span>
+                        </div>
+                    </div>
+
+                    <button type="button" class="btn-primary" ng-click="uploadMaterial()" ng-disabled="isUploading">
+                        <span ng-if="!isUploading">Upload Material</span>
+                        <span ng-if="isUploading">Uploading...</span>
+                    </button>
+                </form>
+            </div>
+            </div>
+        </div>
+
+        <!-- Materials List Section -->
+        <div class="materials-section">
+            <h2>Available Materials</h2>
+
+            <div ng-if="materials.length === 0" class="no-materials">
+                <p>No study materials available yet.</p>
+            </div>
+
+            <div ng-if="materials.length > 0" class="materials-grid">
+                <div ng-repeat="material in materials" class="material-card">
+                    <div class="material-header">
+                        <span class="file-icon">{{ getFileIcon(material.file_type) }}</span>
+                        <div class="material-info">
+                            <h3>{{ material.title }}</h3>
+                            <p class="material-meta">
+                                <span class="file-type">{{ material.file_type | uppercase }}</span>
+                                <span class="file-size">{{ material.file_size }}</span>
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="material-body">
+                        <p class="description" ng-if="material.description">{{ material.description }}</p>
+                        
+                        <div class="material-details">
+                            <div ng-if="material.subject" class="detail-item">
+                                <strong>Subject:</strong> {{ material.subject }}
+                            </div>
+                            <div ng-if="material.semester" class="detail-item">
+                                <strong>Semester:</strong> {{ material.semester }}
+                            </div>
+                            <div class="detail-item">
+                                <strong>Uploaded:</strong> {{ material.uploaded_date }}
+                            </div>
+                            <div class="detail-item">
+                                <strong>By:</strong> {{ material.uploaded_by }}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="material-actions">
+                        <button class="btn-download" ng-click="downloadMaterial(material.id)">
+                            ⬇️ Download
+                        </button>
+                        <button ng-if="isLoggedIn" class="btn-danger" ng-click="deleteMaterial(material.id)">
+                            🗑️ Delete
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.login-prompt {
+    background: #e7f3ff;
+    border: 1px solid #b3d9ff;
+    border-radius: 4px;
+    padding: 15px;
+    margin-bottom: 20px;
+    color: #004085;
+    text-align: center;
+}
+
+.login-prompt a {
+    color: #0056b3;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.login-prompt a:hover {
+    text-decoration: underline;
+}
+
+.study-materials-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.upload-section {
+    margin-bottom: 40px;
+}
+
+.upload-card {
+    background: #f8f9fa;
+    border-radius: 8px;
+    padding: 30px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.upload-card h2 {
+    margin-top: 0;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.upload-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group label {
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: #333;
+}
+
+.form-group input,
+.form-group textarea,
+.form-group select {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+    font-family: inherit;
+}
+
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus {
+    outline: none;
+    border-color: #007bff;
+    box-shadow: 0 0 0 3px rgba(0,123,255,0.25);
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+}
+
+.file-input-wrapper {
+    position: relative;
+}
+
+.file-input-wrapper input[type="file"] {
+    padding: 10px;
+    border: 2px dashed #007bff;
+    border-radius: 4px;
+    background: white;
+    cursor: pointer;
+}
+
+.file-hint {
+    display: block;
+    font-size: 12px;
+    color: #666;
+    margin-top: 5px;
+}
+
+.btn-primary {
+    padding: 12px 24px;
+    background: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 600;
+    transition: background 0.3s;
+}
+
+.btn-primary:hover:not(:disabled) {
+    background: #0056b3;
+}
+
+.btn-primary:disabled {
+    background: #ccc;
+    cursor: not-allowed;
+}
+
+.materials-section {
+    margin-top: 40px;
+}
+
+.materials-section h2 {
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.no-materials {
+    text-align: center;
+    padding: 40px;
+    background: #f8f9fa;
+    border-radius: 8px;
+    color: #666;
+}
+
+.materials-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 20px;
+}
+
+.material-card {
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    overflow: hidden;
+    transition: box-shadow 0.3s, transform 0.3s;
+}
+
+.material-card:hover {
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    transform: translateY(-2px);
+}
+
+.material-header {
+    display: flex;
+    align-items: flex-start;
+    padding: 15px;
+    background: #f8f9fa;
+    border-bottom: 1px solid #ddd;
+    gap: 12px;
+}
+
+.file-icon {
+    font-size: 32px;
+    min-width: 40px;
+}
+
+.material-info h3 {
+    margin: 0 0 5px 0;
+    color: #333;
+    font-size: 16px;
+    word-break: break-word;
+}
+
+.material-meta {
+    margin: 0;
+    font-size: 12px;
+    color: #666;
+    display: flex;
+    gap: 10px;
+}
+
+.file-type {
+    background: #e9ecef;
+    padding: 2px 8px;
+    border-radius: 3px;
+    font-weight: 600;
+}
+
+.file-size {
+    color: #999;
+}
+
+.material-body {
+    padding: 15px;
+}
+
+.description {
+    margin: 0 0 15px 0;
+    color: #666;
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+.material-details {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    font-size: 13px;
+    color: #555;
+}
+
+.detail-item {
+    display: flex;
+    justify-content: space-between;
+}
+
+.detail-item strong {
+    color: #333;
+}
+
+.material-actions {
+    display: flex;
+    gap: 10px;
+    padding: 15px;
+    border-top: 1px solid #ddd;
+    background: #f8f9fa;
+}
+
+.btn-download {
+    flex: 1;
+    padding: 10px;
+    background: #28a745;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+    transition: background 0.3s;
+}
+
+.btn-download:hover {
+    background: #218838;
+}
+
+.btn-danger {
+    padding: 10px 15px;
+    background: #dc3545;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+    transition: background 0.3s;
+}
+
+.btn-danger:hover {
+    background: #c82333;
+}
+
+.alert {
+    padding: 12px 15px;
+    border-radius: 4px;
+    margin-bottom: 15px;
+    font-size: 14px;
+}
+
+.alert-success {
+    background: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+}
+
+.alert-error {
+    background: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+}
+
+@media (max-width: 768px) {
+    .form-row {
+        grid-template-columns: 1fr;
+    }
+
+    .materials-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .material-actions {
+        flex-direction: column;
+    }
+
+    .btn-download {
+        flex: auto;
+    }
+}
+</style>

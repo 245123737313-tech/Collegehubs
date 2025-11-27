@@ -1,0 +1,49 @@
+<div class="page-container">
+    <div class="page-header">
+        <h1>Lost & Found</h1>
+        <button class="btn-primary" ng-click="showForm = !showForm">
+            {{ showForm ? 'Hide Form' : 'Post Lost Item' }}
+        </button>
+    </div>
+
+    <p ng-if="message" class="message" ng-class="{'success': message.includes('successfully'), 'error': !message.includes('successfully')}">{{ message }}</p>
+
+    <div ng-if="showForm && isLoggedIn" class="form-container">
+        <h2>Post a Lost Item</h2>
+        <form ng-submit="addItem()">
+            <div class="form-group">
+                <label for="item_name">Item Name:</label>
+                <input type="text" id="item_name" ng-model="newItem.item_name" placeholder="Enter item name" required>
+            </div>
+            <div class="form-group">
+                <label for="description">Description:</label>
+                <textarea id="description" ng-model="newItem.description" placeholder="Describe the item and where it was lost" rows="5" required></textarea>
+            </div>
+            <div class="form-group">
+                <label for="posted_by">Your Name:</label>
+                <input type="text" id="posted_by" ng-model="newItem.posted_by" placeholder="Enter your name" required>
+            </div>
+            <button type="submit" class="btn-primary">Post Item</button>
+        </form>
+    </div>
+
+    <div ng-if="showForm && !isLoggedIn" class="form-container">
+        <p class="message error">Please login to post an item</p>
+    </div>
+
+    <div class="items-list">
+        <h2>Lost Items</h2>
+        <div ng-if="items.length === 0" class="empty-state">
+            <p>No lost items posted yet.</p>
+        </div>
+        <div ng-repeat="item in items" class="item-card">
+            <div class="card-header">
+                <h3>{{ item.item_name }}</h3>
+                <button class="btn-delete" ng-click="deleteItem(item.id)" title="Delete item">Delete</button>
+            </div>
+            <p>{{ item.description }}</p>
+            <p><strong>Posted by:</strong> {{ item.posted_by }}</p>
+            <small>Posted on: {{ item.date | date:'medium' }}</small>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html ng-app="collegeHubApp">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>College Hub - Student Portal</title>
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular-route.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <div class="app-container">
+        <header class="header">
+            <div class="header-content">
+                <div class="header-left">
+                    <h1 class="logo">College Hub</h1>
+                </div>
+                <nav class="header-center">
+                    <a href="#!/home" class="nav-link">Home</a>
+                    <a href="#!/notices" class="nav-link">Notices</a>
+                    <a href="#!/lostfound" class="nav-link">Lost & Found</a>
+                    <a href="#!/studymaterials" class="nav-link">Study Materials</a>
+                </nav>
+                <div class="header-right" ng-controller="AuthController">
+                    <span ng-if="isLoggedIn" class="user-info">
+                        Welcome, <strong>{{ userName }}</strong>
+                        <button class="btn-logout" ng-click="logout()">Logout</button>
+                    </span>
+                    <span ng-if="!isLoggedIn">
+                        <a href="#!/login" class="btn-auth">Login</a>
+                        <a href="#!/register" class="btn-auth">Register</a>
+                    </span>
+                </div>
+            </div>
+        </header>
+
+        <main class="main-content">
+            <div ng-view></div>
+        </main>
+
+        <footer class="footer">
+            <p>&copy; Created by Sravan Reddy</p>
+        </footer>
+    </div>
+
+    <script src="js/app.js"></script>
+    <script src="js/controllers/authController.js"></script>
+    <script src="js/controllers/noticesController.js"></script>
+    <script src="js/controllers/lostFoundController.js"></script>
+    <script src="js/controllers/studyMaterialsController.js"></script>
+    <script src="js/services/apiService.js"></script>
+</body>
+</html>
