@@ -194,11 +194,10 @@ CREATE TABLE IF NOT EXISTS lostfound (
 2. Browse all lost items
 3. If logged in, you can post a lost item
 
-### CGPA Calculator
-1. Click "CGPA Calculator" in the navigation
-2. Add semesters and enter GPA and credits
-3. Your cumulative GPA will be calculated automatically
-
+### Study Materials
+1. Click "Study Materials" in the navigation
+2. Browse all study materials
+3. If logged in, you can upload a study material
 ## API Endpoints
 
 ### Authentication
